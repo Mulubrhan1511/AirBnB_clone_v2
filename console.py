@@ -132,16 +132,14 @@ class HBNBCommand(cmd.Cmd):
             z = i.split('=')
             list_key.append(z[0])
             list_value.append(z[1])
-        my_dict = dict(zip(list_key, list_value))
-        #print(type(my_dict))    
-        new_instance = HBNBCommand.classes[x[0]]()
-        for key in my_dict:
-            new_instance.key = my_dict[key]
-        new_instance.save
-        storage.save()
-        print(new_instance.id)
-        storage.save()
-
+        kwargs = dict(zip(list_key, list_value))
+        if kwargs == {}:
+            obj = eval(x[0])()
+        else:
+            obj = eval(x[0])(**kwargs)
+            storage.new(obj)
+        print(obj.id)
+        obj.save()
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
