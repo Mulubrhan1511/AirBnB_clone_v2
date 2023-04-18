@@ -115,39 +115,32 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, line):
-        """Usage: create <class> <key 1>=<value 2> <key 2>=<value 2> ...
-        Create a new class instance with given keys/values and print its id.
-        """
-        try:
-            if not line:
-                raise SyntaxError()
-            my_list = line.split(" ")
-
-            kwargs = {}
-            for i in range(1, len(my_list)):
-                key, value = tuple(my_list[i].split("="))
-                if value[0] == '"':
-                    value = value.strip('"').replace("_", " ")
-                else:
-                    try:
-                        value = eval(value)
-                    except (SyntaxError, NameError):
-                        continue
-                kwargs[key] = value
-
-            if kwargs == {}:
-                obj = eval(my_list[0])()
-            else:
-                obj = eval(my_list[0])(**kwargs)
-                storage.new(obj)
-            print(obj.id)
-            obj.save()
-
-        except SyntaxError:
+    def do_create(self, args):
+        """ Create an object of any class"""
+        if not args:
             print("** class name missing **")
-        except NameError:
+            return
+        x = args.split(' ',1)
+        if x[0] not in  HBNBCommand.classes:
             print("** class doesn't exist **")
+            return
+        #print(x[1])
+        list_key = []
+        list_value = []
+        y = x[1].split()
+        for i in y:
+            z = i.split('=')
+            list_key.append(z[0])
+            list_value.append(z[1])
+        my_dict = dict(zip(list_key, list_value))
+        #print(type(my_dict))    
+        new_instance = HBNBCommand.classes[x[0]]()
+        for key in my_dict:
+            new_instance.key = my_dict[key]
+        new_instance.save
+        storage.save()
+        print(new_instance.id)
+        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
