@@ -10,7 +10,7 @@ Base = declarative_base()
 
 
 class BaseModel:
-    """A base class for all hbnb models"""
+    """A Base class for all hbnb models"""
     id = Column(String(60), nullable=False, primary_key=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
@@ -40,7 +40,7 @@ class BaseModel:
             self.__dict__.update(kwargs)
 
     def __str__(self):
-        """Returns a string representation of the instance"""
+        """Returns a String representation of the instance"""
         dictionary = self.__dict__.copy()
         dictionary.pop("_sa_instance_state", None)
         return "[{}] ({}) {}".format(type(self).__name__, self.id, dictionary)
