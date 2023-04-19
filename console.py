@@ -127,23 +127,23 @@ class HBNBCommand(cmd.Cmd):
 
         for pair in args[1:]:
             attr = pair.split("=", maxsplit=1)
-            my_key = attr[0]
-            my_value = ""
+            key = attr[0]
+            value = ""
             if attr[1][0] == '\"':
-                my_value = attr[1][1:-1].replace("_", " ").replace('"', '\"')
+                value = attr[1][1:-1].replace("_", " ").replace('"', '\"')
             else:
                 if '.' in attr[1]:
                     try:
-                        my_value = float(attr[1])
+                        value = float(attr[1])
                     except (SyntaxError, NameError):
                         pass
                 else:
                     try:
-                        my_value = int(attr[1])
+                        value = int(attr[1])
                     except (SyntaxError, NameError):
                         pass
-            if my_value != "":
-                setattr(new_instance, my_key, my_value)
+            if value != "":
+                setattr(new_instance, key, value)
             else:
                 pass
         new_instance.save()
