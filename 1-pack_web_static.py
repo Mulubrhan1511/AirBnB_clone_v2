@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """This pyhton script compresses the contents of webstatic to .tzg file"""
-from datetime import datetime
 from fabric.api import local
+from datetime import datetime
 
 
-def do_pack():
+def do_pack(c):
     """A method that acomplishes the above objective"""
     now = datetime.now()
     appended_name = now.strftime("%Y%m%d%H%M%S")
