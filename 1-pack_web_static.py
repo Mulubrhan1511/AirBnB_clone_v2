@@ -1,18 +1,15 @@
-#!/usr/bin/python3
-"""This pyhton script compresses the contents of webstatic to .tzg file"""
 from fabric.api import local
 from datetime import datetime
 
-
-def do_pack(c):
-    """A method that acomplishes the above objective"""
+def do_pack():
+    """Create a compressed archive of the web_static directory."""
     now = datetime.now()
-    appended_name = now.strftime("%Y%m%d%H%M%S")
-    archive_name = "versions/web_static_" + appended_name + ".tgz"
+    archive_name = "versions/web_static_{}.tgz".format(now.strftime("%Y%m%d%H%M%S"))
 
     local("mkdir -p versions")
+    result = local("tar -czvf {} web_static".format(archive_name))
 
-    if local("tar -cvzf {} web_static".format(archive_name)).failed is True:
+    if result.failed:
         return None
-
-    return archive_name
+    else:
+        return archive_name
