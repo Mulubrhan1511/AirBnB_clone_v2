@@ -17,5 +17,10 @@ def hbnb():
     """Displays 'HBNB' from the root path"""
     return 'HBNB'
 
+@app.route('/c/<text>', strict_slashes=False)
+def cisfun(text):
+    """C is fun!"""
+    return 'C {}'.format(text.replace('_', ' '))
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
